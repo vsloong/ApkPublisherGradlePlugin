@@ -1,5 +1,7 @@
 package com.vsloong.apkpublisher.agp;
 
+import static com.vsloong.apkpublisher.agp.entity.ConstantsKt.ROOT_DIR;
+
 import com.android.build.gradle.AppExtension;
 import com.android.build.gradle.api.ApplicationVariant;
 import com.android.build.gradle.api.BaseVariantOutput;
@@ -108,19 +110,26 @@ public class ApkPublisherTask extends DefaultTask {
 
     /**
      * 获取要保存的路径
-     * 例如：apkPublisher/flavors[0]/flavors[1]/versionCode/time/
+     * 例如：ROOT_DIR(根目录)/packageName或flavors[0]/versionCode/flavors[1]/flavor[n]/time/
      */
     private String getTargetDirPath(ApkInfoBean apkInfoBean) {
 
         StringBuilder path = new StringBuilder();
-        path.append("/").append("apkPublisher");
-        if (!apkInfoBean.flavors.isEmpty()) {
+        path.append("/").append(ROOT_DIR);
+
+        if (apkInfoBean.flavors.isEmpty()) {
+            path.append("/").append(apkInfoBean.applicationId);
+            path.append("/").append(apkInfoBean.versionCode);
+        } else {
             int size = apkInfoBean.flavors.size();
             for (int i = 0; i < size; i++) {
-                path.append("/").append(apkInfoBean.flavors.get(i).name.toLowerCase());
+                String flavor = apkInfoBean.flavors.get(i).name.toLowerCase();
+                path.append("/").append(flavor);
+                if (i == 0) {
+                    path.append("/").append(apkInfoBean.versionCode);
+                }
             }
         }
-        path.append("/").append(apkInfoBean.versionCode);
         path.append("/").append(getCurrentFormatTime());
         return path.toString();
     }
@@ -194,7 +203,7 @@ public class ApkPublisherTask extends DefaultTask {
                 "### " + appName + apkInfoBean.versionCode + "_" + apkInfoBean.versionName +
                         "\n-----" +
                         "\n注意：仅支持内网环境" +
-                        "\n- [历史APK目录](" + extension.ftpHost + ":" + extension.ftpPort + "/" + "apkPublisher" + ")" +
+                        "\n- [历史APK目录](" + extension.ftpHost + ":" + extension.ftpPort + "/" + ROOT_DIR + ")" +
                         "\n- [点击下载APK](" + apkDownloadUrl + ")" +
                         "\n- [点击显示二维码](" + qrCodeImageUrl + ")"
         );

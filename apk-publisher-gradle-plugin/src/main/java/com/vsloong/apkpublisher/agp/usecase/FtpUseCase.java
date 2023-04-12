@@ -36,7 +36,7 @@ public class FtpUseCase implements IFtpProcessor {
 
             FTPClient ftpClient = new FTPClient();
 
-            //这里不需要端口号
+            //这里走默认端口号
             ftpClient.connect(realHost);
 
             boolean isLogin = ftpClient.login(username, password);
@@ -48,6 +48,12 @@ public class FtpUseCase implements IFtpProcessor {
             //设置上传文件类型为二进制
             ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
+            /**
+             * 设置每次数据连接之前，ftp client告诉ftp server开通一个端口来传输数据。
+             * 因为ftp server可能每次开启不同的端口来传输数据，但是在linux上，由于安全限制，可能某些端口没有开启，所以就出现阻塞。
+             * 导致整体执行下去了，但是文件却没有上传成功。
+             */
+            ftpClient.enterLocalPassiveMode();
 
             //切换到Ftp目录，顺便检查目录是否正确
             boolean isRightBasePath = ftpClient.changeWorkingDirectory(basePath);

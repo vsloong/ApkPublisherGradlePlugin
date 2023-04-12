@@ -11,6 +11,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:7.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
 
-        classpath "io.github.vsLoong:apk-publisher-gradle-plugin:1.0.1"
+//        classpath "io.github.vsLoong:apk-publisher-gradle-plugin:1.0.1"
     }
 }

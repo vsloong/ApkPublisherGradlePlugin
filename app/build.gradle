@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 
-    id 'apk-publisher-gradle-plugin'
+//    id 'apk-publisher-gradle-plugin'
 }
 
 android {
@@ -53,17 +53,17 @@ dependencies {
 }
 
 
-//自定义插件的配置信息
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-apkPublisherInfo {
-    dingTalkServerUrl = properties.getProperty('dingTalkServerUrl')
-    dingTalkSecret = properties.getProperty('dingTalkSecret')
-//    dingTalkAtUsers = "157xxxxxxxx,151xxxxxxxx"
-
-    ftpHost = properties.getProperty('ftpHost')
-    ftpPort = properties.getProperty('ftpPort').toInteger()
-    ftpUsername = properties.getProperty('ftpUsername')
-    ftpPassword = properties.getProperty('ftpPassword')
-    ftpBasePath = properties.getProperty('ftpBasePath')
-}
+////自定义插件的配置信息
+//Properties properties = new Properties()
+//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//apkPublisherInfo {
+//    dingTalkServerUrl = properties.getProperty('dingTalkServerUrl')
+//    dingTalkSecret = properties.getProperty('dingTalkSecret')
+////    dingTalkAtUsers = "157xxxxxxxx,151xxxxxxxx"
+//
+//    ftpHost = properties.getProperty('ftpHost')
+//    ftpPort = properties.getProperty('ftpPort').toInteger()
+//    ftpUsername = properties.getProperty('ftpUsername')
+//    ftpPassword = properties.getProperty('ftpPassword')
+//    ftpBasePath = properties.getProperty('ftpBasePath')
+//}
